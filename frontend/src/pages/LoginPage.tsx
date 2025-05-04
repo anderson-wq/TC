@@ -44,7 +44,7 @@ const LoginPage: React.FC = () => {
         <div className="p-8 flex flex-col justify-center">
           <div className="mb-8 text-center md:text-left">
             <h1 className="text-2xl font-bold text-gray-800 mb-1">
-              Sign in to Capital Inv
+              Sign in to Trueston capital
             </h1>
             <p className="text-gray-600">Turn Your Idea Into Reality</p>
           </div>

@@ -47,7 +47,7 @@ const SignUpPage: React.FC = () => {
         <div className="p-8 flex flex-col justify-center">
           <div className="mb-8 text-center md:text-left">
             <h1 className="text-2xl font-bold text-gray-800 mb-1">Create Your Account</h1>
-            <p className="text-gray-600">Join Capital Inv and start growing</p>
+            <p className="text-gray-600">Join Trueston capital and start growing</p>
           </div>
 
           <form className="space-y-6" onSubmit={handleSubmit}>
