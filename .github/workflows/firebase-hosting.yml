@@ -9,12 +9,12 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: inv/frontend  # 👈 This makes all commands run inside frontend
+
     steps:
       - uses: actions/checkout@v4
-
-      # Add this step to navigate to the frontend folder
-      - name: Navigate to frontend folder
-        run: cd frontend
 
       - name: Install dependencies
         run: npm ci
