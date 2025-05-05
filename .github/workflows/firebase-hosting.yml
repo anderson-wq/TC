@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Change directory to frontend
-        working-directory: inv/frontend
+        working-directory: frontend
         run: |
           npm ci
           npm run build
@@ -25,4 +25,4 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_INVV_79DB4 }}"
           channelId: live
           projectId: invv-79db4
-          entryPoint: inv/frontend  # 👈 This tells Firebase CLI where your app lives
+          entryPoint: frontend  # 👈 This tells Firebase CLI where your app lives
