@@ -11,7 +11,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: inv/frontend  # 👈 This makes all commands run inside frontend
+        working-directory: INV/frontend  # 👈 This makes all commands run inside frontend
 
     steps:
       - uses: actions/checkout@v4
