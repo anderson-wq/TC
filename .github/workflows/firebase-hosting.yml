@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Change directory to frontend
-        working-directory: frontend
+        working-directory: inv/frontend
         run: |
           npm ci
           npm run build
