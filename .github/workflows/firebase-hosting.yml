@@ -25,4 +25,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_INVV_79DB4 }}'
           channelId: live
           projectId: invv-79db4
-          entryPoint: frontend # 👈 This tells Firebase CLI where your app lives
+          entryPoint: / # 👈 This tells Firebase CLI where your app lives
