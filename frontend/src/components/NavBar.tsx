@@ -78,7 +78,7 @@ const NavBar = () => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed top-0  left-0 right-0 bottom-0 w-full h-screen bg-gray-900 text-white p-6 z-50 md:hidden overflow-y-auto">
+        <div onClick={toggleMobileMenu} className="fixed top-0  left-0 right-0 bottom-0 w-full h-screen bg-gray-900 text-white p-6 z-50 md:hidden overflow-y-auto">
           <div className="flex justify-between items-center mb-6">
             <img src={logo} alt="logo" className="w-10" />
             <button
