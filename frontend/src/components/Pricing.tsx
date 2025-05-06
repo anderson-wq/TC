@@ -10,7 +10,7 @@ const Pricing = () => {
       features: ['Account Manager', 'Quick Support'],
       bg: 'bg-gray-200',
       buttonBg: 'bg-black',
-      buttonHover: 'hover:bg-yellow-500',
+      buttonHover: 'hover:bg-blue-500',
     },
     {
       name: 'Advanced Plan',
@@ -20,7 +20,7 @@ const Pricing = () => {
       features: ['Priority Withdrawal', 'Referral Earnings'],
       bg: 'bg-gray-200',
       buttonBg: 'bg-black',
-      buttonHover: 'hover:bg-purple-500',
+      buttonHover: 'hover:bg-blue-500',
     },
     {
       name: 'Premium Plan',
@@ -30,7 +30,7 @@ const Pricing = () => {
       features: ['VIP Support', 'Bonus Offers'],
       bg: 'bg-gray-200',
       buttonBg: 'bg-black',
-      buttonHover: 'hover:bg-pink-500',
+      buttonHover: 'hover:bg-blue-500',
     },
     {
       name: 'Elite Plan',
@@ -40,7 +40,7 @@ const Pricing = () => {
       features: ['Dedicated Advisor', 'Premium Returns'],
       bg: 'bg-gray-200',
       buttonBg: 'bg-black',
-      buttonHover: 'hover:bg-indigo-500',
+      buttonHover: 'hover:bg-blue-500',
     },
     {
       name: 'Pro Plan',
@@ -50,7 +50,7 @@ const Pricing = () => {
       features: ['Early Payout Option', 'High Return'],
       bg: 'bg-gray-200',
       buttonBg: 'bg-black',
-      buttonHover: 'hover:bg-red-500',
+      buttonHover: 'hover:bg-blue-500',
     },
   ];
 
