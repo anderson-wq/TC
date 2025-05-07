@@ -15,12 +15,12 @@ const HomeKnowAbout = () => {
             Know About Us
           </h2>
           <p className="text-[17px] mt-6 text-gray-700 leading-relaxed text-center md:text-left">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla optio alias
-            similique nisi eum officiis nesciunt corrupti autem cum magnam.
+          We are a dedicated investment platform focused on helping you grow
+          your financial future. 
           </p>
           <p className="text-[17px] mt-4 text-gray-700 leading-relaxed text-center md:text-left">
-            Possimus a quasi id nobis? Non minus voluptate architecto culpa. Corrupti
-            blanditiis, rerum illo quaerat iusto dolorem repudiandae tenetur.
+          Our expert team ensures that your money works
+          for you, through secure and profitable plans tailored to your goals.
           </p>
 
           <Link to="/about">
