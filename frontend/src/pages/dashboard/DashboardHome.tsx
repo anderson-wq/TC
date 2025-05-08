@@ -9,6 +9,7 @@ import {
 } from 'react-icons/ai';
 import { FaMoneyBillWave, FaReceipt } from 'react-icons/fa';
 import { MdOutlineCompareArrows } from 'react-icons/md';
+import { updateDoc } from 'firebase/firestore';
 
 const DashboardHome = () => {
   interface UserData {
@@ -22,6 +23,7 @@ const DashboardHome = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
 
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,6 +67,54 @@ const DashboardHome = () => {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const userRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const data = userSnap.data();
+        setIsAdmin(data.isAdmin === true);
+      }
+    };
+
+    fetchUserRole();
+  }, []);
+
+  const [targetUserId, setTargetUserId] = useState('');
+  const [adminInterestUpdateStatus, setAdminInterestUpdateStatus] =
+    useState('');
+
+  const handleAdminAddInterest = async () => {
+    try {
+      const userRef = doc(db, 'users', targetUserId);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        setAdminInterestUpdateStatus('User not found.');
+        return;
+      }
+
+      const user = userSnap.data();
+      const newInterest =
+        (user.interestBalance || 0) + (user.investmentAmount || 0) * 0.2;
+
+      await updateDoc(userRef, {
+        interestBalance: newInterest,
+      });
+
+      setAdminInterestUpdateStatus(
+        `Successfully updated interest for ${targetUserId}.`,
+      );
+    } catch (error) {
+      console.error('Admin interest update error:', error);
+      setAdminInterestUpdateStatus('Failed to update interest.');
+    }
+  };
 
   const dashboardStats = [
     {
@@ -136,6 +186,35 @@ const DashboardHome = () => {
               </div>
             </div>
           ))}
+          <div>
+            <div>
+              {isAdmin && (
+                <div className="mt-12 bg-gray-50 p-4 rounded shadow">
+                  <h2 className="text-lg font-semibold mb-2">
+                    Admin: Update Interest for a User
+                  </h2>
+                  <input
+                    type="text"
+                    placeholder="Enter User UID"
+                    className="border px-2 py-1 rounded mr-2"
+                    value={targetUserId}
+                    onChange={(e) => setTargetUserId(e.target.value)}
+                  />
+                  <button
+                    onClick={handleAdminAddInterest}
+                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  >
+                    Add 20% Interest
+                  </button>
+                  {adminInterestUpdateStatus && (
+                    <p className="mt-2 text-sm text-gray-600">
+                      {adminInterestUpdateStatus}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>
