@@ -21,7 +21,7 @@ const dashContent: DashContent[] = [
     id: 1,
     icon: <AiOutlineDollarCircle size={32} />,
     title: 'Main Balance',
-    price: 0.0,
+    price: 637000,
   },
   {
     id: 2,
@@ -33,20 +33,20 @@ const dashContent: DashContent[] = [
     id: 3,
     icon: <AiOutlinePieChart size={32} />,
     title: 'Total Balance',
-    price: 0.0,
+    price: 637000,
   },
   {
     id: 4,
     icon: <FaMoneyBillWave size={32} />,
     title: 'Total Invest',
-    price: 0.0,
+    price: 637000,
   },
   { id: 5, icon: <FaReceipt size={32} />, title: 'Total Payout', price: 0.0 },
   {
     id: 6,
     icon: <MdOutlineCompareArrows size={32} />,
     title: 'Total Transaction',
-    price: 0.0,
+    price: 637000,
   },
   { id: 7, icon: <FaTicketAlt size={32} />, title: 'Total Ticket', price: 0 },
 ];
@@ -63,7 +63,8 @@ const DashboardHome = () => {
               <div className="text-blue-600">{item.icon}</div>
               <div>
                 <div className="font-bold">{item.title}</div>
-                <div className="font-semibold">${item.price.toFixed(2)}</div>
+                <div className="font-semibold">${item.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </div>
               </div>
             </div>
           </div>
