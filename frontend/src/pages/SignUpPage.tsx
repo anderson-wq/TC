@@ -16,19 +16,20 @@ const SignUpPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
+  
     if (!register) {
       setError("Register function is not available.");
       return;
     }
-
+  
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
-
+  
     try {
-      await register(email, password);
+      // Pass the fullName to register
+      await register(email, password, fullName);
       console.log("Registering user with email:", email);
       navigate('/login'); 
       // optionally redirect after signup
@@ -40,7 +41,7 @@ const SignUpPage: React.FC = () => {
       }
     }
   };
-
+  
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6 mt-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-5xl">

@@ -1,24 +1,24 @@
 import { auth } from './firebase';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, User,  sendPasswordResetEmail } from 'firebase/auth'; // Ensure correct import of User and onAuthStateChanged
-import { FirebaseError } from 'firebase/app'; // 👈 Ensure you're importing FirebaseError for error handling
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, User, updateProfile as firebaseUpdateProfile, sendPasswordResetEmail, UserCredential } from 'firebase/auth'; 
+import { FirebaseError } from 'firebase/app';
 
-
+// Reset Password
 export const resetPassword = async (email: string): Promise<void> => {
   const auth = getAuth();
   await sendPasswordResetEmail(auth, email);
 };
 
-
+// Login function
 export const login = async (email: string, password: string) => {
   const auth = getAuth();
   
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log('Login successful:', userCredential.user); // Success log
-    return userCredential.user;  // Return user details on successful login
+    console.log('Login successful:', userCredential.user);
+    return userCredential.user;
   } catch (error) {
     if (error instanceof FirebaseError) {
-      console.error('Error during login attempt:', error); // Log full error object
+      console.error('Error during login attempt:', error);
 
       if (error.code === 'auth/wrong-password') {
         throw new Error('Incorrect password.');
@@ -30,15 +30,23 @@ export const login = async (email: string, password: string) => {
         throw new Error('Invalid email format.');
       }
     }
-    
-    // General error catch
     throw new Error('An unexpected error occurred.');
   }
 };
+
 // Register function
-export const register = async (email: string, password: string) => {
+export const register = async (email: string, password: string, fullName: string) => {
+  const auth = getAuth();
+  
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+    // After user is created, update their profile with the full name
+    await firebaseUpdateProfile(userCredential.user, { displayName: fullName });
+
+    console.log("User registered and full name set:", fullName);
+
+    return userCredential.user;
   } catch (error: unknown) {
     if (error instanceof FirebaseError) {
       switch (error.code) {
@@ -59,6 +67,9 @@ export const register = async (email: string, password: string) => {
   }
 };
 
+// Export firebaseUpdateProfile explicitly so it can be used in other files
+export { firebaseUpdateProfile };
+
 // Logout function
 export const logout = async () => {
   try {
@@ -67,7 +78,6 @@ export const logout = async () => {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
-
     throw new Error("An unknown error occurred during logout.");
   }
 };
