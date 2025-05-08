@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import bitcoin from '../assets/qrcodes/bitcoin.jpg';
 import Swal from 'sweetalert2';
+import { getAuth } from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { db } from '../../src/auth/firebase'; // Adjust this path to your project
 
 const walletDetails = {
   bitcoin: {
@@ -19,7 +22,7 @@ const CryptoTransfer = () => {
     confirmReceiver: '',
     amount: '',
   });
-  const [isSending, setIsSending] = useState(false); // For handling transfer state
+  const [isSending, setIsSending] = useState(false);
 
   const handleWalletChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -30,16 +33,59 @@ const CryptoTransfer = () => {
     setCopied(false);
   };
 
-  const handleClick = () => {
-    Swal.fire({
-      title: 'Thanks!',
-      text: 'Please wait while we verify your payment.',
-      icon: 'success',
-      confirmButtonColor: '#facc15', // Tailwind's yellow-400
-      confirmButtonText: 'OK',
-    });
+  const handleClick = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+  
+    console.log('USER:', user); // Add this
+    console.log('FORM DATA AMOUNT:', formData.amount); // Add this
+  
+    if (!user) {
+      alert('User not authenticated.');
+      return;
+    }
+  
+    if (!formData.amount) {
+      alert('Please enter an amount first.');
+      return;
+    }
+  
+    try {
+      const userRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+  
+      const existingAmount = userSnap.exists()
+        ? userSnap.data().investmentAmount || 0
+        : 0;
+  
+      const updatedAmount = Number(existingAmount) + Number(formData.amount);
+      console.log('UPDATED AMOUNT:', updatedAmount); // Add this
+  
+      await setDoc(
+        userRef,
+        {
+          investmentAmount: updatedAmount,
+          email: user.email,
+        },
+        { merge: true }
+      );
+  
+      Swal.fire({
+        title: 'Thanks!',
+        text: 'We’ve received your investment request. It’s being processed.',
+        icon: 'success',
+        confirmButtonColor: '#facc15',
+        confirmButtonText: 'OK',
+      });
+  
+      setFormData({ ...formData, amount: '' });
+  
+    } catch (error) {
+      console.error('Error updating investment:', error); // Log the actual error
+      alert('Failed to update your investment. Please try again.');
+    }
   };
-
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
@@ -62,43 +108,33 @@ const CryptoTransfer = () => {
       !formData.amount ||
       !selectedWallet
     ) {
-      alert('Please fill in all fields.');
+      Swal.fire('Warning', 'Please fill in all fields.', 'warning');
       return;
     }
 
     if (formData.receiver !== formData.confirmReceiver) {
-      alert('Receiver information does not match.');
+      Swal.fire('Mismatch', 'Receiver information does not match.', 'error');
       return;
     }
 
     setIsSending(true);
     setTimeout(() => {
-      alert('Crypto transfer initiated!');
+      Swal.fire('Success', 'Crypto transfer initiated!', 'success');
       setIsSending(false);
-    }, 2000); // Simulating the transfer process
+    }, 2000);
   };
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Transfer with Crypto
-        </h1>
-        <p className="text-gray-500 mt-2">
-          Send crypto securely to another wallet or email.
-        </p>
+        <h1 className="text-3xl font-bold text-gray-800">Transfer with Crypto</h1>
+        <p className="text-gray-500 mt-2">Send crypto securely to another wallet or email.</p>
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-xl p-6 space-y-6"
-      >
+      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-xl p-6 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label
-              htmlFor="amount"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
               Amount
             </label>
             <input
@@ -112,15 +148,11 @@ const CryptoTransfer = () => {
           </div>
 
           <div>
-            <label
-              htmlFor="wallet"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="wallet" className="block text-sm font-medium text-gray-700">
               Select Coin
             </label>
             <select
               id="wallet"
-              name="wallet"
               value={selectedWallet}
               onChange={handleWalletChange}
               className="mt-2 border border-gray-300 rounded-md p-3 w-full"
@@ -131,7 +163,6 @@ const CryptoTransfer = () => {
           </div>
         </div>
 
-        {/* Wallet Address & QR Code */}
         {walletAddress && (
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -166,9 +197,7 @@ const CryptoTransfer = () => {
                 type="button"
                 onClick={handleClick}
                 className={`mt-4 px-4 py-2 ${
-                  isSending
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-yellow-500 hover:bg-yellow-400'
+                  isSending ? 'bg-gray-400 cursor-not-allowed' : 'bg-yellow-500 hover:bg-yellow-400'
                 } text-white rounded w-full`}
                 disabled={isSending}
               >
