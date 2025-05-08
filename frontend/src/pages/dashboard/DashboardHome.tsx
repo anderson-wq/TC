@@ -159,64 +159,66 @@ const DashboardHome = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
+    <div>
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
 
-      {loading ? (
-        <p className="text-gray-600">Loading user data...</p>
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-          {dashboardStats.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white shadow-md p-5 rounded-lg flex items-center justify-between"
-            >
-              <div className="text-blue-600">{item.icon}</div>
-              <div className="text-right">
-                <p className="text-sm text-gray-500 font-medium">
-                  {item.title}
-                </p>
-                <p className="text-lg font-bold text-gray-800">
-                  $
-                  {item.value.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </p>
-              </div>
-            </div>
-          ))}
-          <div>
-            <div>
-              {isAdmin && (
-                <div className="mt-12 bg-gray-50 p-4 rounded shadow">
-                  <h2 className="text-lg font-semibold mb-2">
-                    Admin: Update Interest for a User
-                  </h2>
-                  <input
-                    type="text"
-                    placeholder="Enter User UID"
-                    className="border px-2 py-1 rounded mr-2"
-                    value={targetUserId}
-                    onChange={(e) => setTargetUserId(e.target.value)}
-                  />
-                  <button
-                    onClick={handleAdminAddInterest}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  >
-                    Add 20% Interest
-                  </button>
-                  {adminInterestUpdateStatus && (
-                    <p className="mt-2 text-sm text-gray-600">
-                      {adminInterestUpdateStatus}
-                    </p>
-                  )}
+        {loading ? (
+          <p className="text-gray-600">Loading user data...</p>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+            {dashboardStats.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white shadow-md p-5 rounded-lg flex items-center justify-between"
+              >
+                <div className="text-blue-600">{item.icon}</div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-500 font-medium">
+                    {item.title}
+                  </p>
+                  <p className="text-lg font-bold text-gray-800">
+                    $
+                    {item.value.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </p>
                 </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <div>
+        <div>
+          {isAdmin && (
+            <div className="mt-12 bg-gray-50 p-4 rounded shadow w-full flex flex-col items-center gap-2">
+              <h2 className="text-lg font-semibold mb-2">
+                Admin: Update Interest for a User
+              </h2>
+              <input
+                type="text"
+                placeholder="Enter User UID"
+                className="border px-2 py-1 rounded mr-2 w-full"
+                value={targetUserId}
+                onChange={(e) => setTargetUserId(e.target.value)}
+              />
+              <button
+                onClick={handleAdminAddInterest}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Add 20% Interest
+              </button>
+              {adminInterestUpdateStatus && (
+                <p className="mt-2 text-sm text-gray-600">
+                  {adminInterestUpdateStatus}
+                </p>
               )}
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
