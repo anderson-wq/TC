@@ -5,7 +5,7 @@ const Navbar2 = () => {
   const username = user?.displayName || user?.email?.split('@')[0] || 'Guest';
 
   return (
-    <header className="w-full bg-gradient-to-r from-gray-900 to-blue-900 shadow-md p-4 flex items-center justify-between">
+    <header className="w-full bg-gradient-to-r from-gray-900 to-blue-900 shadow-md rounde p-4 flex items-center justify-between">
       {/* Left Section (Logo or Name) */}
       <div className="text-white font-bold text-xl">Dashboard</div>
 

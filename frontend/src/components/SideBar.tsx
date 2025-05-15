@@ -20,7 +20,7 @@ const SideBar = () => {
     <>
       {/* Mobile Toggle Button */}
       <button
-        className="md:hidden fixed top-20 right-4 z-50 text-white bg-blue-900 p-2 rounded"
+        className="md:hidden fixed top-8 right-6 z-50 w-10 h-10 text-white bg-blue-600 p-2 rounded-full"
         onClick={toggleSidebar}
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -29,7 +29,7 @@ const SideBar = () => {
       {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 h-screen w-64 bg-gradient-to-b from-gray-900 to-blue-900 text-white z-40 transform transition-transform duration-300 ease-in-out 
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`} onClick={toggleSidebar}
       >
         {/* Top Section */}
         <div className="p-6">
