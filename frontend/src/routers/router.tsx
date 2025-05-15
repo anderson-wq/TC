@@ -19,7 +19,7 @@ import RequestMoney from '../pages/dashboard/RequestMoney';
 import Transaction from '../pages/dashboard/Transaction';
 import Fund from '../components/Fund';
 import CryptoTransfer from '../components/CryptoTransfer';
-import SettingsPage from '../pages/dashboard/SettingsPage';
+// import SettingsPage from '../pages/dashboard/SettingsPage';
 import ProtectedRoute from './protectedRoute';
 
 const router = createBrowserRouter([
@@ -59,14 +59,14 @@ const router = createBrowserRouter([
       { path: 'transfer/crypto', element: <CryptoTransfer /> },
       
       // Protected Route with specific role (Superadmin)
-      {
-        path: 'setting',
-        element: (
-          <ProtectedRoute requiredRole="superadmin">
-            <SettingsPage />
-          </ProtectedRoute>
-        ),
-      },
+      // {
+      //   path: 'setting',
+      //   element: (
+      //     <ProtectedRoute requiredRole="superadmin">
+      //       <SettingsPage />
+      //     </ProtectedRoute>
+      //   ),
+      // },
     ],
   },
 ]);
