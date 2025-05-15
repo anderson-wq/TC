@@ -40,7 +40,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6 mt-20">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-5xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8  rounded-lg  overflow-hidden w-full max-w-5xl">
         <div className="p-8 flex flex-col justify-center">
           <div className="mb-8 text-center md:text-left">
             <h1 className="text-2xl font-bold text-gray-800 mb-1">
